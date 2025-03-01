@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
     lname : String,
     email : String,
     password : String,
+    profileImg : String,
     post : [{type : mongoose.Schema.Types.ObjectId , ref : 'Post'}]
 });
 
-module.exports = mongoose.model(userSchema , 'User');
+module.exports = mongoose.model('User' , userSchema);
