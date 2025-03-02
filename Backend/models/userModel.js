@@ -6,7 +6,15 @@ const userSchema = new mongoose.Schema({
     email : String,
     password : String,
     profileImg : String,
-    post : [{type : mongoose.Schema.Types.ObjectId , ref : 'Post'}]
+    role: {
+        type: String,
+        enum: ["user", "admin", "editor"], // Allowed roles
+        default: "user" // Default role
+    },
+    createdAt : {
+        type : String,
+        default : new Date()
+    }
 });
 
 module.exports = mongoose.model('User' , userSchema);

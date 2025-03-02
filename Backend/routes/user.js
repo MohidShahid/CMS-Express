@@ -1,5 +1,6 @@
 const express = require('express');
 const userModel = require('../models/userModel');
+const bcrypt = require('bcryptjs');
 
 const router = express.Router();
 
@@ -8,9 +9,28 @@ router.get('/', async(req ,res)=>{
     res.status(201).send(users);
 })
 
-router.post('/create' , async(req , res)=>{
-   await  userModel.create(req.body);
-   res.status(201).send({message : "User created Successfully"});
+router.post('/register' , async(req , res)=>{
+    try{
+        const {fname , lname , email , password , role } = req.body;
+        const existingUser = await userModel.find({email});
+        if(existingUser.length > 0){
+         return res.status(401).json({message : "email already exist"})
+        }else{
+            const hashedPassword = await bcrypt.hash(password , 10)
+            const newUser =  new userModel({
+                fname , 
+                lname,
+                email,
+                role : role || 'user',
+                password : hashedPassword
+            })
+            await newUser.save();
+            res.status(201).json({ message: "User registered successfully!" });
+        }
+    }catch(err){
+       res.status(500).json({message : err.message})
+    }
+
 })
 
 router.delete('/:id' , async(req , res)=>{
