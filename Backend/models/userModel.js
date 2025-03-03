@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    fname : String,
-    lname : String,
+    name : String,
     email : String,
     password : String,
     profileImg : String,
@@ -12,9 +11,9 @@ const userSchema = new mongoose.Schema({
         default: "user" // Default role
     },
     createdAt : {
-        type : String,
+        type : Date,
         default : new Date()
     }
-});
+},{ timestamps: true });
 
 module.exports = mongoose.model('User' , userSchema);

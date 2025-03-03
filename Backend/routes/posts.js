@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const postModel = require('../models/postModel');
+const verifyToken = require('../middleware/authMiddleware')
 
-router.post('/create', async(req , res)=>{
+router.post('/create', verifyToken , async(req , res)=>{
     try{
         const {title , content} = req.body;
         const newPost = new postModel({title , content});
@@ -15,14 +16,14 @@ router.post('/create', async(req , res)=>{
 
 })
 
-router.delete('/:id' , async(req, res)=>{
+router.delete('/:id' , verifyToken,  async(req, res)=>{
    const post = await postModel.deleteOne({_id : req.params.id});
    res.json({message : "post deleted"  , post});
 })
 
-router.get('/', async(req , res)=>{
+router.get('/', verifyToken , async(req , res)=>{
    const posts = await postModel.find();
-   res.json(posts)
+   res.status(200).json(posts);
 })
 
 module.exports = router;
