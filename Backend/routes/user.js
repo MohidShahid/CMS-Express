@@ -2,7 +2,8 @@ const express = require('express');
 const userModel = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const verifyToken = require('../middleware/authMiddleware')
+const verifyToken = require('../middleware/authMiddleware');
+const upload = require('../middleware/fileUpload');
 
 const router = express.Router();
 const SECRET_KEY = "Glyptodon@2305";
@@ -45,11 +46,10 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/register' , async(req , res)=>{
+router.post('/register' , upload.single('file') ,async(req , res)=>{
     try{
         const {name ,  email , password , role } = req.body;
         const existingUser = await userModel.find({email});
-        console.log(existingUser)
         if(existingUser.length > 0){
          return res.status(401).json({message : "email already exist"})
         }else{
@@ -58,7 +58,8 @@ router.post('/register' , async(req , res)=>{
                 name,
                 email,
                 role : role || 'user',
-                password : hashedPassword
+                password : hashedPassword,
+                profileImg : req.file
             })
             await newUser.save();
             res.status(201).json({ message: "User registered successfully!" });
