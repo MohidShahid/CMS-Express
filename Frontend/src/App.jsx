@@ -1,33 +1,30 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import {useForm} from "react-hook-form";
 import './App.css'
+import authService from './api/authService';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [status , setStatus] = useState("")
+  const {handleSubmit , register} = useForm();
+  const handleRegister = async(data)=>{
+    const response =  await authService.registerUser(data);
+    setStatus(response.message);
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className="signup-form flex flex-col items-center justify-center w-full">
+      <h1>Register Yourself</h1>
+      <form className='flex flex-col items-center justify-center' onSubmit={handleSubmit(handleRegister)}>
+         <input className='px-2 py-1 outline-none border-1' type="text" placeholder="Enter You Name" {...register("name")}/>
+         <input className='px-2 py-1 outline-none border-1' type="text" placeholder='Enter Your Email' {...register("email")}/>
+         <input className='px-2 py-1 outline-none border-1' type="text" placeholder='Enter Your Password' {...register("password")}/>
+         <input className='px-2 py-1 outline-none border-1' type="file"  {...register("profileImg")}/>
+         <input defaultValue={"admin"} type='text' {...register("role")} />
+         <input type="submit" placeholder='Submit' className='font-bold bg-pink-500 cursor-pointer px-2 py-2 rounded' />
+      </form>
+      <p className='text-red'>{status}</p>
+    </div>
     </>
   )
 }
