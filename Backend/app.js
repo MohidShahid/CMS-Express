@@ -8,8 +8,14 @@ const cookieParser = require('cookie-parser');
 
 connectDB();
 const app = express();
+app.use("/uploads", express.static("uploads"));
 app.use(cookieParser());
-app.use(cors());
+
+app.use(cors({
+    origin: "http://localhost:5173", // Adjust based on your frontend URL
+    credentials: true // Allow cookies
+}));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

@@ -1,13 +1,14 @@
 const multer = require('multer');
 
+// Configure Multer
 const storage = multer.diskStorage({
     destination: "./uploads/",
     filename: (req, file, cb) => {
-        cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname);
+        const fileExtension = file.mimetype.split("/")[1]; 
+        cb(null, file.fieldname + "-" + Date.now() + "." + fileExtension);
     },
 });
 
-// Middleware function for file upload
 const upload = multer({ storage: storage });
 
 
