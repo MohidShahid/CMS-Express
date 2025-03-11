@@ -8,7 +8,7 @@ function Home() {
     <>
     <div className="w-full h-auto">
     <NavbarMenu />
-    {Outlet}
+    <Outlet />
     <FooterComponent />
     </div>
     </>

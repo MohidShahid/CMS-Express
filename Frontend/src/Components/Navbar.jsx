@@ -1,7 +1,19 @@
 import React from 'react'
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
+import { useSelector } from 'react-redux';
 
 function NavbarMenu() {
+  const authStatus = useSelector((state)=> state.auth.status);
+  const navItems = [
+    {
+      name : "Home",
+      link : "/",
+      active : authStatus
+    },
+    {
+      name : ""
+    }
+  ]
   return (
     <Navbar fluid rounded>
       <Navbar.Brand href="http://localhost:5173/">
@@ -32,10 +44,10 @@ function NavbarMenu() {
         <Navbar.Link href="#" active>
           Home
         </Navbar.Link>
-        <Navbar.Link href="#">About</Navbar.Link>
-        <Navbar.Link href="#">Services</Navbar.Link>
-        <Navbar.Link href="#">Pricing</Navbar.Link>
-        <Navbar.Link href="#">Contact</Navbar.Link>
+        <Navbar.Link href="#">Add Post</Navbar.Link>
+        <Navbar.Link href='#'>Login</Navbar.Link>
+        <Navbar.Link href='#'>Signup</Navbar.Link>
+        <Navbar.Link href='#'>All Posts</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
   );

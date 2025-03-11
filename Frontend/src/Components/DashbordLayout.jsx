@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 function DashboardLayout() {
+  const user = useSelector((state) => state.auth);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
+  if( !user.data || user.data.role !== "admin"){
+    return <h1>Unauthorized</h1>
+  } else{
   return (
     <div className="flex h-screen w-full">
       {/* Sidebar */}
@@ -18,7 +23,7 @@ function DashboardLayout() {
           <ul className="space-y-2 font-medium">
             <li>
               <a
-                href="#"
+                href="/dashboard"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <span className="ms-3">Dashboard</span>
@@ -26,18 +31,18 @@ function DashboardLayout() {
             </li>
             <li>
               <a
-                href="#"
+                href="/posts"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
-                <span className="ms-3">Kanban</span>
+                <span className="ms-3">All Posts</span>
               </a>
             </li>
             <li>
               <a
-                href="#"
+                href="/addpost"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
-                <span className="ms-3">Inbox</span>
+                <span className="ms-3">Add New Post</span>
               </a>
             </li>
           </ul>
@@ -113,7 +118,7 @@ function DashboardLayout() {
                   <ul className="py-1">
                     <li>
                       <a
-                        href="#"
+                        href="/dashboard"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
                         Dashboard
@@ -129,10 +134,10 @@ function DashboardLayout() {
                     </li>
                     <li>
                       <a
-                        href="#"
+                        href="/logout"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
-                        Sign out
+                        Logout
                       </a>
                     </li>
                   </ul>
@@ -155,5 +160,5 @@ function DashboardLayout() {
     </div>
   );
 }
-
+}
 export default DashboardLayout;
