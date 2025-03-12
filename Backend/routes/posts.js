@@ -21,9 +21,18 @@ router.delete('/:id' , verifyToken,  async(req, res)=>{
    res.json({message : "post deleted"  , post});
 })
 
-router.get('/', verifyToken , async(req , res)=>{
+router.get('/', async(req , res)=>{
    const posts = await postModel.find();
    res.status(200).json(posts);
+})
+
+router.get('/:id' , verifyToken , async (req , res)=>{
+    const post = await postModel.findOne({_id : req.params.id})
+    res.status(200).json(post);
+})
+router.get('/userId/:id' , verifyToken , async(req , res)=>{
+    const posts = await postModel.find({author : req.params.id});
+    res.status(200).json(posts);
 })
 
 module.exports = router;
