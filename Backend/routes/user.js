@@ -10,8 +10,8 @@ const verifyAdmin = require('../middleware/authAdmin')
 const router = express.Router();
 const SECRET_KEY = "Glyptodon@2305";
 
-router.get('/', verifyToken, verifyAdmin, async(req ,res)=>{
-   const users =  await userModel.find({});
+router.get('/', verifyToken, verifyAdmin, async (req, res) => {
+    const users = await userModel.find({});
     res.status(201).json(users);
 })
 
@@ -39,7 +39,7 @@ router.post('/login', async (req, res) => {
 
         res.cookie("authToken", token, {
             httpOnly: true,
-            secure: false, 
+            secure: true,
             maxAge: 3600000,
             sameSite: "strict"
         });
@@ -87,28 +87,36 @@ router.post("/register", upload.single("profileImg"), async (req, res) => {
     }
 });
 
-router.post('/logout' , (req , res)=>{
+router.post('/logout', (req, res) => {
     res.clearCookie('authToken');
-    res.status(200).json({message : "Logged Out Successfully"})
+    res.status(200).json({ message: "Logged Out Successfully" })
 })
-router.delete('/:id' , verifyToken , verifyAdmin , async(req , res)=>{
-    await userModel.deleteOne({_id : req.params.id});
-    res.status(201).send({message : "Deleted Successfully"});
+router.delete('/:id', verifyToken, verifyAdmin, async (req, res) => {
+    await userModel.deleteOne({ _id: req.params.id });
+    res.status(201).send({ message: "Deleted Successfully" });
 })
 
-router.put('/:id' , verifyToken, verifyAdmin, async(req , res)=>{
-    await userModel.updateOne({_id : req.params.id} , req.body);
+router.put('/:id', verifyToken, verifyAdmin, async (req, res) => {
+    await userModel.updateOne({ _id: req.params.id }, req.body);
     const updatedUser = await userModel.findById(req.params.id)
     res.status(201).send(updatedUser);
 })
 
-router.post('/upload' , verifyToken ,  upload.single('profileImg'), async(req , res)=>{
-    const user = await userModel.findOne({_id : req.user.id});
-    if(user.profileImg){
-        fs.unlink(path.resolve(__dirname ,"..", user.profileImg ))
+router.post('/upload', verifyToken, upload.single('profileImg'), async (req, res) => {
+    const user = await userModel.findOne({ _id: req.user.id });
+    if (user.profileImg) {
+        fs.unlink(path.resolve(__dirname, "..", user.profileImg))
     }
-     const updatedUser = await userModel.updateOne({_id : user._id} , { $set: { profileImg: req.file ? req.file.path : "" } });
-     res.status(201).json(updatedUser);
+    const updatedUser = await userModel.updateOne({ _id: user._id }, { $set: { profileImg: req.file ? req.file.path : "" } });
+    res.status(201).json(updatedUser);
+})
+
+router.get('/verifySession', verifyToken, async(req, res) => {
+    const currentUser = req.user;
+    if(currentUser) {
+       const fetchUser = await userModel.findOne({_id : currentUser.id})
+       res.status(201).json(fetchUser);
+    } else {res.status(401).json({message : "Unauthorized user found"})}
 })
 
 

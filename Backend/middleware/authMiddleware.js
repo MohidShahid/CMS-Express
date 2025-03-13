@@ -10,6 +10,7 @@ const verifyToken = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, SECRET_KEY);
+        console.log(decoded);
         req.user = decoded; // Store user info for next middleware
         next();
     } catch (error) {

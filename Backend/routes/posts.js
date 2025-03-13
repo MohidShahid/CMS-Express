@@ -6,7 +6,7 @@ const verifyToken = require('../middleware/authMiddleware')
 router.post('/create', verifyToken , async(req , res)=>{
     try{
         const {title , content} = req.body;
-        const newPost = new postModel({title , content});
+        const newPost = new postModel({title , content, author : req.user.id});
         console.log(req.body);
         await newPost.save();
         res.status(201).send(newPost);
