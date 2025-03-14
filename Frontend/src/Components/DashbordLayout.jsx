@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import MainContent from "./MainContent";
 
 function DashboardLayout() {
   const user = useSelector((state) => state.auth);
@@ -31,7 +32,7 @@ function DashboardLayout() {
             </li>
             <li>
               <a
-                href="/posts"
+                href="/"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <span className="ms-3">All Posts</span>
@@ -39,7 +40,7 @@ function DashboardLayout() {
             </li>
             <li>
               <a
-                href="/addpost"
+                href="/add-post"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <span className="ms-3">Add New Post</span>
@@ -149,12 +150,7 @@ function DashboardLayout() {
 
         {/* Main Content */}
         <main className="flex-1 p-4 mt-16 bg-gray-100 dark:bg-gray-900">
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
-            Main Content
-          </h1>
-          <p className="mt-4 text-gray-600 dark:text-gray-300">
-            This is the main content area where your page content will go.
-          </p>
+         <MainContent />
         </main>
       </div>
     </div>

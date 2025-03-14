@@ -13,6 +13,8 @@ import Post from "./Components/Post.jsx";
 import { Provider } from "react-redux";
 import UserPosts from "./pages/UserPosts.jsx";
 import PostEditor from "./pages/PostEditor.jsx";
+import AddPost from "./pages/AddPost.jsx";
+import UploadImg from "./Components/uploadImg.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -27,6 +29,10 @@ const router = createBrowserRouter([
             element : (<AuthLayout authentication={false}>
               <Front/>
             </AuthLayout>)
+          },
+          {
+            path : "add-post",
+            element : (<AuthLayout authentication={true}><AddPost/></AuthLayout>)
           },
           {
             path : "/post/:id",
@@ -44,6 +50,12 @@ const router = createBrowserRouter([
             path : "/edit-post/:id",
             element : (<AuthLayout authentication={true}>
               <PostEditor />
+            </AuthLayout>)
+          },
+          {
+            path : "/uploadImg",
+            element : (<AuthLayout authentication>
+              <UploadImg />
             </AuthLayout>)
           }
         ]

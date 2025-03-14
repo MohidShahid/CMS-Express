@@ -22,7 +22,6 @@ function Login() {
         dispatch(login(response.user));
         navigate("/");  
       }
-      console.log(useSelector((state) => state));
   };  
   return (
     <div className="w-full h-screen flex items-center justify-center">
@@ -59,6 +58,7 @@ function Login() {
             {...register("password")}
           />
         </div>
+        <p className="text-slate-950 text-sm">Don't have an account? <a href="/register" className="underline hover:font-bold">Sign Up</a></p>
         <Button type="submit">Submit</Button>
         <p className="text-blue-950">{status}</p>
       </form>

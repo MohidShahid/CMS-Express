@@ -3,12 +3,14 @@ import axios from 'axios';
 class configService {
    baseUrl = 'http://localhost:3000/api/posts';
 
+
     async CreatePost(data){
         try {
           return await axios ({
                 method : 'POST',
                 url : `${this.baseUrl}/create`,
                 data : data,
+                withCredentials: true
             })
         } catch (error) {
             return error;
@@ -21,6 +23,7 @@ class configService {
             return await axios({
                 method : 'GET',
                 url : `${this.baseUrl}/`,
+                withCredentials : true
             })
         } catch (error) {
             return error;
@@ -32,6 +35,7 @@ class configService {
             return await axios({
                 method : 'DELETE',
                 url : `${this.baseUrl}/${id}`,
+                withCredentials : true
             })
         } catch (error) {
             return error;
@@ -40,9 +44,10 @@ class configService {
 
     async getUserPosts(id){
         try {
-            await axios({
+           return await axios({
                 method : 'GET',
                 url : `${this.baseUrl}/userId/${id}`,
+                withCredentials : true
             })
         } catch (error) {
             return error;
@@ -51,9 +56,10 @@ class configService {
 
     async getSinglePost(id){
         try {
-            await axios({
+           return await axios({
                 method : 'GET',
-                url : `${this.baseUrl}/:${id}`,
+                url : `${this.baseUrl}/${id}`,
+                withCredentials : true
             })
         } catch (error) {
             return error ;
@@ -62,6 +68,6 @@ class configService {
 }
 
 
-const configService = new configService();
+const configServiceInstance = new configService()
 
-export default configService;
+export default configServiceInstance

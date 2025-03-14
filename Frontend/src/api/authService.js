@@ -15,14 +15,13 @@ async sendRequest(method, endpoint = "", pathParams = "", data = {}) {
             method,
             url,
             data,
-            headers: { "Content-Type": "application/json" }
+            headers: { "Content-Type": "application/json" },
+            withCredentials : true
         });
-
         return response;
 
     } catch (error) {
-        console.log(error.response); 
-        return error.response
+        return error
     }
 }
 
@@ -48,9 +47,38 @@ async sendRequest(method, endpoint = "", pathParams = "", data = {}) {
     async logoutUser (){
        return await this.sendRequest('POST' , "logout");
     }
-    async getUser(){
+    async getAllUser(){
         return await this.sendRequest('GET')
     }
+
+    async getSession() {
+        try {
+            const response = await this.sendRequest('GET', "verifySession");
+            return response.data; // Return only the response data
+        } catch (error) {
+            console.error("Session verification failed:", error.message);
+            return null; // Handle errors gracefully
+        }
+    }
+
+    async fileUpload (data){
+        try {
+           const response = await axios ({
+                method : 'POST',
+                url : `${this.baseUrl}upload`,
+                data : data,
+                headers: {
+                    "Content-Type": "multipart/form-data", // Ensure proper file handling
+                },
+                withCredentials : true
+            })
+            return response
+        } catch (error) {
+            return error
+        }
+       
+    }
+    
 };
 
 const authService = new AuthService();

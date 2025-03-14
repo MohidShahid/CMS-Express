@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, {useState , useEffect } from "react";
 import configService from "../api/config";
+import { useParams } from "react-router-dom";
 
 function Post() {
   const { id } = useParams();
   const [post, setPost] = useState({});
 
   useEffect(() => {
+    console.log(id)
     configService
       .getSinglePost(id)
-      .then((res) => setPost(res))
+      .then((res) =>{ setPost(res.data); console.log(res)})
       .catch((err) => console.log(err));
   }, []);
   return (

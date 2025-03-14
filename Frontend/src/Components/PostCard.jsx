@@ -12,7 +12,7 @@ function PostCard({post}) {
       <p className="font-normal text-gray-700 dark:text-gray-400 max-h-[4.5rem] overflow-hidden text-ellipsis">
         {post.content}
       </p>
-      <Link to={`/post/${post._id}`}><Button>
+      <Link to={`/post/${post._id}`} className='flex items-center justify-start'>
         Read more
         <svg className="-mr-1 ml-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -21,7 +21,7 @@ function PostCard({post}) {
             clipRule="evenodd"
           />
         </svg>
-      </Button></Link>
+      </Link>
     </Card>
   );
 }

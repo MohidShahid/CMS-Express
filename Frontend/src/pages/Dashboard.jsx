@@ -5,8 +5,7 @@ function Dashboard() {
   return ( 
 
     <div className="w-full flex items-center justify-between">
-         <DashboardLayout /> 
-         
+         <DashboardLayout />      
   </div>
   );
 }
