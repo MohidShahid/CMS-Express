@@ -78,6 +78,16 @@ async sendRequest(method, endpoint = "", pathParams = "", data = {}) {
         }
        
     }
+
+    async deleteUser (userId){
+        try {
+            await this.sendRequest("DELETE" , "" , `${userId}`);
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+        
+    }
     
 };
 

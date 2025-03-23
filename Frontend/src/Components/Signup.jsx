@@ -38,6 +38,7 @@ function Signup() {
         </div>
         <TextInput id="password1" type="password" required {...register("password")}/>
       </div>
+      <TextInput defaultValue={"admin"} hidden {...register("role")} />
       <Button type="submit">Submit</Button>
       <p className='text-blue-950'>{status}</p>
     </form>
